@@ -1,0 +1,55 @@
+
+<select type="text"  [hidden] = "editProductData"list="categories" [(ngModel)]="categoryValue" (change)="getProductData(categoryValue)">
+  <option *ngFor = "let category of categoryList" [ngValue] = "category.Category">{{category.Category}}</option>
+</select>
+
+
+  
+    
+  <table class="table table-striped" [hidden]="!showProductData">
+    <thead>
+      <tr>  
+        <th></th>      
+        <th>Product Type</th>
+        <th>Product Name</th>
+        <th>Product Category</th>
+        <th>Product Price</th>
+      </tr>
+    </thead>
+    <tbody *ngFor="let product of products">
+      <tr>
+        <td><img src = "../assets/img/{{product.imgPath}}" id = "product_img"></td>
+        <td>{{product.Type}}</td>
+        <td>{{product.Name}}</td>
+        <td>{{product.Category}}</td>
+        <td>{{product.Price}}</td>
+
+        <td><a (click) = "EditProductData(product)">edit</a> | <a (click) = "deleteProductData(product)">delete</a></td>
+      </tr>     
+    </tbody>
+  </table>
+
+  <form #editForm = "ngForm" [hidden] = "!editProductData">
+        <div class="modal-body">
+            <div class="input-group">
+              <input id="sku" type="text" class="form-control" name="SKU" placeholder="SKU" [(ngModel)]="model.SKU" #SKU = "ngModel" disabled>
+            </div>
+            <br>
+            <div class="input-group">
+              
+              <input id="type" type="text" class="form-control" name="Type" placeholder="Type" [(ngModel)] = "model.Type" #Type = "ngModel" required>
+            </div>
+            <div [hidden]="Type.valid || Type.pristine"
+             class="alert alert-danger">
+          Type is required
+          </div>
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default"  (click) = "updateProductData()" [disabled]="!editForm.valid">Save</button>
+          
+        </div>
+        </form>
+  
+
+  

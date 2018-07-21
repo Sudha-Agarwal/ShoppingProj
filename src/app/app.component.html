@@ -1,0 +1,121 @@
+<!--The content below is only a placeholder and can be replaced.-->
+
+<div id = "container" (window:beforeunload)="doSomething()">
+ 
+  <div id = "navbar">
+    <div id = "upper-header">
+      <div id = "hotline">Hotline:(+91) 9999999999</div>
+      <div id = "middle-header">Welcome to our market</div>
+      <div id = "right-header">         
+        <a [hidden] = "login">
+        <button id = "login-button" type="button" (click) = "showModal()" data-toggle="modal" data-target="#myModal"><i class="fa fa-user-circle" style="font-size:24px"></i>{{message}}</button>       
+        </a>
+        <a [hidden] = "!login" (click) = "logOut()" id = "logout">{{message}}</a>
+         | <a>SignUp</a></div>
+</div>
+<div id = "lower-header">  
+<div class="navbar">
+  <div *ngIf= "isAdmin; then AdminTemplate else UserTemplate">Admin</div>
+    <ng-template #AdminTemplate>
+
+      <ul>
+        <li routerLinkActive="active1" [class.linkstyle] = "applied" [routerLinkActiveOptions]="{exact: true}"><a routerLink="/admin-dashboard">Admin Home</a></li>
+        <li routerLinkActive="active1" [class.linkstyle] = "applied"><a routerLink="/listProduct">List Product</a></li>
+        <li routerLinkActive="active1" [class.linkstyle] = "applied"><a routerLink="/addProduct">Add Product</a></li>
+        <li routerLinkActive="active1" [class.linkstyle] = "applied"><a routerLink="/updateProduct">Women Fashion</a></li>
+        <li routerLinkActive="active1" [class.linkstyle] = "applied"><a routerLink="/deleteProduct">Jewellery</a></li>
+        
+        
+      </ul>
+    </ng-template>
+
+    <ng-template #UserTemplate>
+      <ul>
+  <li routerLinkActive="active1" [class.linkstyle] = "applied" [routerLinkActiveOptions]="{exact: true}"><a routerLink="/home">Home</a></li>
+  <li routerLinkActive="active1" [class.linkstyle] = "applied"><a routerLink="/menfashion">Men Fashion</a></li>
+  <li routerLinkActive="active1" [class.linkstyle] = "applied"><a routerLink="/womenfashion">Women Fashion</a></li>
+  <li routerLinkActive="active1" [class.linkstyle] = "applied"><a routerLink="/jewellery">Jewellery</a></li>
+  <li routerLinkActive="active1" [class.linkstyle] = "applied"><a routerLink="/electronics">Electronics</a></li>
+  <li [class.linkstyle] = "applied" style = "float:right"><a routerLink = "/cart-details"><i class="fa fa-shopping-cart" style="font-size:30px"></i>  Cart <span [hidden]="isCartEmpty">({{cartItem}})</span></a></li>
+  
+
+</ul>
+
+
+    </ng-template> 
+
+</div>
+
+  </div>
+  </div>
+  <div [hidden] = "_showModal">
+    <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Login</h4>
+        </div>
+        <form #LoginForm = "ngForm">
+        <div class="modal-body">
+            <div class="input-group">
+              <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+              <input id="email" type="text" class="form-control" name="Username" placeholder="Username" pattern="[A-Za-z0-9]+"[(ngModel)]="model.Username" #Username = "ngModel" required >
+              
+            </div>
+            <div [hidden]="Username.valid || Username.pristine"
+             class="alert alert-danger">
+          Invalid Input
+          </div>
+            <br>
+            <div class="input-group">
+              <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+              <input id="password" type="password" class="form-control" name="Password" placeholder="Password" [(ngModel)] = "model.Password" #Password = "ngModel" required>
+            </div>
+            <div [hidden]="Password.valid || Password.pristine"
+             class="alert alert-danger">
+          password is required
+          </div>
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default"  (click) = "checkLogin()" data-dismiss="modal" [disabled]="!LoginForm.valid">Login</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  </div>
+<router-outlet></router-outlet>
+<br>
+<br><br><br><br><br><br><br><br><br><br><br><br>
+<div id = "footer">
+
+  <div>Connect to us on</div>
+
+    <div id = "left-footer" class="footer">
+      <ul>
+        <li><p>Useful Links</p></li>
+        <li><a href = #>My account</a></li>
+        <li><a href = #>Contact</a></li>
+        <li><a href = #>FAQ</a></li>
+        <li><a href = #>Checkout</a></li>
+      </ul>
+    </div>
+    <div id = "middle-footer" class="footer">
+    <ul>
+        <li><p>CONTACT INFORMATION</p></li>
+        <li>2903 Avenue Z, Brooklyn, NY</li>
+        <li>(212) 457-2308</li>
+        <li>contact@emporium.com</li>
+        <li>Mon - Sun / 9:00AM - 8:00PM</li>
+      </ul>
+    </div>
+    <div id = "right-footer">location</div>
+
+  </div>
+
+
+</div>
+

@@ -1,0 +1,115 @@
+<p class="text-info">
+    Thanks for shopping at the Angular Store.<br />
+    This is your shopping cart. Here you can edit the items, 
+    go back to the store, clear the cart, or check out.
+</p>
+
+<div class="container-fluid">
+  <div class="row-fluid">
+    <div class="span8">
+      <!-- items -->
+            <table class="table table-bordered">
+      <tr class="well">
+          <td></td>
+        <td><b>Item</b></td>
+        <td class="tdCenter"><b>Quantity</b></td>
+        <td class="tdRight"><b>Price</b></td>
+        <td></td>
+      </tr>
+
+      <tr [hidden]="cartItem > 0" >
+      <td class="tdCenter" colspan="4">
+      Your cart is empty.
+      </td>
+      </tr>
+
+      <tr *ngFor = "let item of cart">
+          <td><img src = "../assets/img/{{item.imgPath}}" id = "product_img"></td>
+        <td>{{item.Name}}</td>
+                            <td class="tdCenter">
+                      <div class="input-append">
+                        <!-- use type=tel instead of  to prevent spinners -->
+                        <input
+                            class="span3 text-center" type="tel" 
+                            [(ngModel)]="item.Quantity" 
+                            (change)="saveItems(item.Username,item.SKU,item.Quantity,item.Price)" />
+                        <button 
+                            class="btn btn-success" type="button" 
+                            [disabled]="item.Quantity >= 1000"
+                            (click)="saveItems(item.Username,item.SKU,item.Quantity+1,item.Price)">+</button>
+                        <button 
+                            class="btn btn-inverse" type="button" 
+                            [disabled]="item.Quantity <= 1"
+                            (click)="saveItems(item.Username,item.SKU,item.Quantity-1,item.Price)">-</button>
+                      </div>
+                    </td>
+
+                    <td class="tdRight">{{item.Price * item.Quantity}}</td>
+                    <td class="tdCenter" title="remove from cart">
+                        <a (click)="deleteItem(item.Username,item.SKU)" >
+                            <i class="fa fa-window-close"></i>
+                        </a>
+                    </td>
+      </tr>
+                      <!-- footer -->
+                <tr class="well">
+                    <td><b>Total</b></td>                    
+                    <td class="tdCenter"><b>{{cartItem}}</b></td>
+                    <td></td>
+                    <td class="tdRight"><b>{{cartItemTotalPrice}}</b></td>
+                    <td></td>
+                </tr>
+            </table>
+
+
+    </div>
+            <!-- buttons -->
+        <div class="span4">
+            <p class="text-info">
+                <button 
+                    class="btn btn-block" 
+                    (click)="backToStore()">
+                    <i class="fa fa-caret-square-o-left"></i> back to store
+                </button>
+                <button 
+                    class="btn btn-block btn-danger" 
+                    (click)="clearItems()" 
+                    [disabled]="cartItemCount < 1" >
+                    <i class="icon-trash icon-white"></i> clear cart
+                </button>
+            </p>
+
+            <br /><br />
+
+            <p class="text-info">
+                <button
+                    [routerLink] = "['/checkout',currentUserName]"
+                    class="btn btn-block btn-primary"                    
+                    (click)="checkoutPayPal()"
+                    [disabled]="cartItemCount < 1">
+                    <i class="icon-ok icon-white"></i> check out using PayPal
+                </button>
+                <button 
+                    routerLink = '/checkout'
+                    class="btn btn-block btn-primary"                     
+                    [disabled]="cartItemCount < 1">
+                    <i class="icon-ok icon-white"></i>check out using Google
+                </button>
+                <button 
+                    class="btn btn-block btn-primary" 
+                    (click)="checkout('Stripe')" 
+                    [disabled]="cartItemCount < 1">
+                    <i class="icon-ok icon-white" ></i> check out using Stripe
+                </button>
+            </p>
+                <!-- Stripe needs a form to post to -->
+                <form class="form-stripe"></form>
+
+            <br /><br />
+
+            
+        </div>
+  </div>
+
+</div>
+

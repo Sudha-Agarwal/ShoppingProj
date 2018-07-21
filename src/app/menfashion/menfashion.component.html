@@ -1,0 +1,24 @@
+<h4 style = "margin-left:20px;">latest men fashion</h4>
+
+<div>
+    <form>
+        <input type = "text" [(ngModel)] = "term" name = "term" />
+        
+    </form>
+  <div>
+    <ul *ngFor="let product of products | filter:term" class = "products" >            
+            <a [routerLink] = "['/product-detail',product.SKU]">
+            <li                 
+             id= "product-list">
+                <div id = "img-div"><img src = "../assets/img/{{product.imgPath}}"></div>
+                {{product.Name}}             
+            </li></a>
+            <div id="add-cart">
+            <p (click) = "addToCart(product)">Add to Cart</p>                        
+            </div>   
+        </ul>
+
+  </div>
+
+ </div>
+
